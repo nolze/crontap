@@ -8,6 +8,7 @@ Installation
 
 ```bash
 sudo pip install git+https://github.com/nolze/crontap
+mkdir ~/.cronmodule
 ```
 
 or
@@ -15,12 +16,15 @@ or
 ```bash
 git clone https://github.com/nolze/crontap && cd crontap
 python setup.py install
+mkdir ~/.cronmodule
 ```
+
 
 ### Uninstall
 
 ```bash
 sudo pip uninstall crontap
+rm -rf ~/.cronmodule
 # if you don't need them:
 sudo pip uninstall Click pyyaml plaintable
 ```
