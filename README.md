@@ -6,11 +6,24 @@ crontap is a modular, git-like and easy-to-use crontab management tool for you. 
 Installation
 ----
 
-TODO
+```bash
+sudo pip install git+https://github.com/nolze/crontap
+```
+
+or
+
+```bash
+git clone https://github.com/nolze/crontap && cd crontap
+python setup.py install
+```
 
 ### Uninstall
 
-TODO
+```bash
+sudo pip uninstall crontap
+# if you don't need them:
+sudo pip uninstall Click pyyaml plaintable
+```
 
 Example Usage
 ----
