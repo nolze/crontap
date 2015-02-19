@@ -36,7 +36,7 @@ class Crontab(object):
         crontab_external = self.get_content(internal=False, external=True)
         to_write.append("PATH={path}:$PATH #{cmt}".format(path=os.getenv('PATH'), cmt=CT_PREFIX+'PATH'))
         to_write.append('\n'.join(crontab_external))
-        for module_name in next(os.walk(tap.cronjob_dir))[1]:
+        for module_name in next(os.walk(tap.modules_dir))[1]:
             module = tap.Module(module_name)
             if not module.settings['enabled']:
                 continue
@@ -49,10 +49,10 @@ class Crontab(object):
         tap.list_modules()
 
 class Tap(object):
-    def __init__(self, cronjob_dir):
-        self.cronjob_dir = path.expanduser(cronjob_dir)
+    def __init__(self, modules_dir):
+        self.modules_dir = path.expanduser(modules_dir)
     def list_modules(self):
-        if not list(os.walk(self.cronjob_dir))[0][1]:
+        if not list(os.walk(self.modules_dir))[0][1]:
             echo("No crontap module is installed.")
             return
         ## load crontab
@@ -66,7 +66,7 @@ class Tap(object):
             active_modules[name] = schedule
         headline = ['Module Name', 'Status', 'Schedule']
         data = []
-        for module_name in next(os.walk(self.cronjob_dir))[1]:
+        for module_name in next(os.walk(self.modules_dir))[1]:
             if active_modules.has_key(module_name):
                 l = [module_name, 'ON', active_modules[module_name]]
             else:
@@ -79,7 +79,7 @@ class Tap(object):
 class Module(object):
     def __init__(self, tap, module_name):
         self.name = module_name
-        self.module_dir = path.join(tap.cronjob_dir, self.name)
+        self.module_dir = path.join(tap.modules_dir, self.name)
         self.script_dir = path.join(self.module_dir, self.name)
         self.log_dir = path.join(self.module_dir, 'log')
         self.settings_path = path.join(self.script_dir, 'cron.yaml')
@@ -136,8 +136,8 @@ def clear_cmd(tap, hard):
     crontab.write(s)
     echo("Cleared all crontap jobs.")
     if hard:
-        for module_name in next(os.walk(tap.cronjob_dir))[1]:
-            rmtree(path.join(tap.cronjob_dir, module_name))
+        for module_name in next(os.walk(tap.modules_dir))[1]:
+            rmtree(path.join(tap.modules_dir, module_name))
         echo("Removed and uninstalled all crontap module files.")
 
 @cli.command('disable', help="Disable <module_name>.")
