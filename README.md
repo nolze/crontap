@@ -19,6 +19,19 @@ python setup.py install
 mkdir ~/.cronmodule
 ```
 
+### Upgrade
+
+```bash
+sudo pip install git+https://github.com/nolze/crontap --upgrade
+```
+
+or
+
+```bash
+cd crontap && git pull -u origin master
+python setup.py install --upgrade
+mkdir ~/.cronmodule
+```
 
 ### Uninstall
 
