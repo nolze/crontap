@@ -30,7 +30,6 @@ or
 ```bash
 cd crontap && git pull -u origin master
 python setup.py install --upgrade
-mkdir ~/.cronmodule
 ```
 
 ### Uninstall
